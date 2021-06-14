@@ -210,7 +210,7 @@
    Emacs wants to create backup and recovery files which are annoying and will make an untidy mess of things. This stops that crap from happening.
 
    #+begin_src emacs-lisp
-     (setq make-backup-filese nil)
+     (setq make-backup-files nil)
      (setq auto-save-default nil)
    #+end_src
 
@@ -247,12 +247,6 @@
 	(backward-word)
 	(kill-word 1))
       (global-set-key (kbd "C-c w w") 'kill-whole-word)
-    #+end_src
-*** Sudo edit
-    #+begin_src emacs-lisp
-      (use-package 'sudo-edit
-	:ensure t
-	:bind ("s-e") . sudo-edit)
     #+end_src
 * Config edit/reload
 ** edit
