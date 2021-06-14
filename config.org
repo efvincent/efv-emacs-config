@@ -1,0 +1,276 @@
+* Org
+** Basic Config
+*** Source editor in current window
+    The default behavior of =C-c C-'= is to split the window and do the source editing in the new window. This command lets the source editing happen in the current org mode window - it has the effect of zooming in on the code snippet and allowing you to edit it.
+   #+begin_src emacs-lisp
+     (setq org-src-window-setup 'current-window)
+   #+end_src
+** Enable <s snippet
+   See this [[https://emacs.stackexchange.com/questions/46988/why-do-easy-templates-e-g-s-tab-in-org-9-2-not-work][stack exchange]] for details and the [[https://github.com/dangom/org-mode/blob/master/lisp/org-tempo.el][org-tempo source]] for info on the full ability and on the implementation,  but we need to require this package in order to restore the snippet behavior of =<s= and other expansions.
+   #+begin_src emacs-lisp
+     (require 'org-tempo)
+   #+end_src
+** Org Bullets
+  #+begin_src emacs-lisp
+    (use-package org-bullets
+      :ensure t
+      :config
+      (add-hook 'org-mode-hook (lambda () (org-bullets-mode))))
+  #+end_src
+
+** Wrap in Org Mode
+   #+begin_src emacs-lisp
+     (add-hook 'org-mode-hook (lambda () (visual-line-mode t)))
+   #+end_src
+   
+* IDO
+** Enable IDO Mode
+   #+begin_src emacs-lisp
+     (setq ido-enable-flex-matching nil)
+     (setq ido-create-new-buffer 'always)
+     (setq ido-everywhere t)
+     (ido-mode 1)
+   #+end_src
+** IDO Vertical
+   #+begin_src emacs-lisp
+     (use-package ido-vertical-mode
+       :ensure t
+       :init
+       (ido-vertical-mode 1))
+   #+end_src
+** SMEX
+   =smex= is like IDO but for =M-x= command completion. Super awesome sauce.
+   #+begin_src emacs-lisp
+     (use-package smex
+       :ensure t
+       :init (smex-initialize)
+       :bind
+       ("M-x" . smex))
+   #+end_src
+
+** Switch Buffer
+   #+begin_src emacs-lisp
+     (global-set-key (kbd "C-x C-b") 'ido-switch-buffer)
+   #+end_src
+* Buffers
+** ibuffer
+   #+begin_src emacs-lisp
+     (global-set-key (kbd "C-x b") 'ibuffer)
+   #+end_src
+** expert
+   #+begin_src emacs-lisp
+     (setq ibuffer-expert t)
+   #+end_src
+* Ansi Terminal Mode
+  By default there are two terminals in emacs, you can get at them with =M-x=. The first is =terminal= which apparently sucks so we won't use it. The one we'll use is =ansi-terminal= which appears to also suck but less.
+** Set default shell to ZSH
+   When you fire up the ansi terminal with =M-x ansi-terminal= it prompts you for your shell, which of course sucks (there's a theme here with terminals in emacs). This allows me to not have to always type =zsh= which is what I use because I'm a sane person.
+
+   #+BEGIN_SRC emacs-lisp
+     (defvar my-term-shell "/bin/zsh")
+     (defadvice ansi-term (before force-bash)
+       (interactive (list my-term-shell)))
+     (ad-activate 'ansi-term)
+   #+END_SRC
+
+** Set the super key combo to launch a terminal
+   The sets up the key combo =<super ret>= to launch =ansi-terminal=. The idea of a /super/ key is from when there were keyboards and hardware specifically for working with lisp, which is interesting and cool, but of course I've never even seen a keyboard with a super key so there's that. [[http://ergoemacs.org/emacs/emacs_hyper_super_keys.html][This post]] has details on super key and mac. Current the command key acts as the super key so long as there's no conflict with an existing command combo, and I'm not sure if it works in terminal mode.
+
+   #+begin_src emacs-lisp
+     (global-set-key (kbd "<s-return>") 'ansi-term)
+   #+end_src
+
+** Set Key Environment Variables
+   There's a quirk that causes the path to not be set correctly when launching =zsh= from =ansi-terminal=. This package solves this by getting the values from the shell.
+   And it works! This is the first thing I went off and solved by myself that wasn't part of some tutorial. /Actually/, not true. I fixed =visual-line-mode= in org mode too, but that was just stock emacs so not that impressive.
+   With this, terminal is somewhat useful.
+
+   #+begin_src emacs-lisp
+     (exec-path-from-shell-initialize)
+   #+end_src
+   
+* Commands
+** Command Completion
+   =which-key= provides essential functionality; after the first key of a chord, =C-x= for example, and emacs will use the minibuffer (I think it's the minibuffer) to display all the options for completing the command. Life cannot exist in emcas for me without this little diddy.
+
+   #+begin_src emacs-lisp
+     (use-package which-key
+	 :ensure t
+	 :init (which-key-mode))
+   #+end_src
+
+** Confirmation
+   This makes it possible to answer yes or no questions that are explicitly looking for the whole word =yes= or =no= to accept just the first letter. /speed/.
+
+   #+begin_src emacs-lisp
+     (defalias 'yes-or-no-p 'y-or-n-p)
+   #+end_src
+
+* Windows
+** Highlight Cursor on switch
+   This package does a quick animation around the cursor when you switch to a window that helps you zero in on where it is. Handy, but not obtrusive.
+   #+begin_src emacs-lisp
+     (use-package beacon
+	 :ensure t
+	 :init (beacon-mode 1))
+   #+end_src
+  
+** Highlight Current Line
+   This is a nice subtle highlighting of the line where the cursor is located. Note that /nice/ and /subtle/ are dependent upon your theme. In the default theme, you can replace those with /jarring/ and /illegible/.
+   Also note that in certain situations in tui mode and over =ssh= and things like that this becomes aweful again. If that becomes an issue, there are ways to execute this only if running in =gui= mode. Google it.
+
+#+begin_src emacs-lisp
+  (global-hl-line-mode t)
+#+end_src
+
+** Split and follow
+   Usually when you split windows with the various control =x= commands, the cursor stays where it is. This custom function dows the split and follows the window
+   #+begin_src elisp
+     (defun split-and-follow-h ()
+       ;; Perform the split horizontally and put the cursor in the new window
+       ;; which will be below the current window
+       (interactive)
+       (split-window-below)
+       (balance-windows)
+       (other-window 1))
+     (global-set-key (kbd "C-x 2") 'split-and-follow-h)
+
+     (defun split-and-follow-v ()
+       ;; Perform the split vertically and put the cursor in the new widnow
+       ;; which will be to the right of the current window
+       (interactive)
+       (split-window-right)
+       (balance-windows)
+       (other-window 1))
+     (global-set-key (kbd "C-x 3") 'split-and-follow-v)
+  #+end_src
+
+** Quick Switcher
+   #+begin_src elisp
+    (use-package switch-window
+      :ensure t
+      :config
+      (setq switch-window-input-style 'minibuffer)
+      (setq switch-window-increase 4)
+      (setq switch-window-threshold 2)
+      (setq switch-window-shortcut-style 'qwerty)
+      (setq switch-window-qwerty-shortcuts
+	    '("a" "s" "d" "f" "h" "j" "k" "l"))
+      :bind
+      ([remap other-window] . switch-window))
+  #+end_src
+
+* Movement
+** Scrolling Content
+   WHen scrolling beyond the bottom or top via arrows or =C-n= =C-p= respectively, emacs wants to make big jumps, which is just not the way things are done anymore especially with our fast key repeat rates. This makes scrolling the contents of a window sane and one line at a time.
+
+  #+begin_src emacs-lisp
+    (setq scroll-conservatively 100)
+  #+end_src
+
+* Editing
+** Normal Edit Keys
+   Hrmm... this is a tough one. I believe I'll get around to learning the proper emacs keys for cut / copy / paste / undo, but for the time being I'm going to go ahead and use =cua-mode= and make my life a bit easier as I get the hang of things.
+
+   #+begin_src emacs-lisp
+     (cua-mode 1)
+   #+end_src
+   
+** Fancy Substition, for example Lambda
+   This is a cool one - replaces the word =lambda= with the actual lambda characer /visually/, meaning the word =lambda= is still in the file, it just looks super cool.
+
+   #+begin_src emacs-lisp
+     (global-prettify-symbols-mode t) 
+   #+end_src
+
+** Show Colors in Code
+   When you put a color in source code, typically hex style like you see in web development, make the background that actual color and the foreground something that will contrast it and keep it visible. Note this works for more than just hex colors, see the docs for more info.
+  #+begin_src emacs-lisp
+    (use-package rainbow-mode
+      :ensure t
+      :init (rainbow-mode 1))
+  #+end_src  
+** Jump to a letter with Avy
+   Select =M-s= and choose a letter to either jump to that letter (across lines) or if there's more than one (like there's likely to be) create key chords you can use to jump to different occurences of that letter.
+  #+begin_src emacs-lisp
+    (use-package avy
+      :ensure t
+      :bind
+      ("M-s" . avy-goto-char))
+  #+end_src
+* General Quality of Life
+** My God with the bell
+   There's never a reason for this annoyingly shittly little sound to ever be heard and I'm sad that I've had to invest time killing it with fire.
+
+  #+begin_src emacs-lisp
+    (setq ring-bell-function 'ignore)
+  #+end_src
+
+** Don't create junk files
+   Emacs wants to create backup and recovery files which are annoying and will make an untidy mess of things. This stops that crap from happening.
+
+   #+begin_src emacs-lisp
+     (setq make-backup-filese nil)
+     (setq auto-save-default nil)
+   #+end_src
+
+** Get Rid of Extra Window Chrome
+   This mostly applies to the =gui= mode but some of it includes terminal mode. No menu bar, tool bar, splash screen, etc. Self explanitory.
+
+   #+begin_src emacs-lisp
+     (tool-bar-mode -1)
+     (menu-bar-mode -1)
+     (scroll-bar-mode -1)
+     (setq inhibit-splash-screen t)
+   #+end_src
+
+** Subword
+   When moving through words with =Alt-f= and =Alt-b= this setting causes the jumps happen into sub words in a camel or snake case variable.
+   #+begin_src emacs-lisp
+     (global-subword-mode 1)
+   #+end_src
+** Electric Parens
+   #+begin_src elisp
+     (setq electric-pair-pairs '(
+				 (?\( . ?\))
+				 (?\[ . ?\])
+				 (?\{ . ?\])
+				 )
+	   )
+     (electric-pair-mode t)
+   #+end_src
+** Convenient Functions
+*** kill-whole-word
+    #+begin_src elisp
+      (defun kill-whole-word ()
+	(interactive)
+	(backward-word)
+	(kill-word 1))
+      (global-set-key (kbd "C-c w w") 'kill-whole-word)
+    #+end_src
+*** Sudo edit
+    #+begin_src emacs-lisp
+      (use-package 'sudo-edit
+	:ensure t
+	:bind ("s-e") . sudo-edit)
+    #+end_src
+* Config edit/reload
+** edit
+   Find and open the =config.org= file where we'll modify our emacs configuation.
+   #+begin_src emacs-lisp
+     (defun config-visit ()
+       (interactive)
+       (find-file "~/.emacs.d/config.org"))
+     (global-set-key (kbd "C-c e") 'config-visit)
+   #+end_src
+** reload
+   Extracts the emacs lisp from the =config.org= Org mode configuration file and executes it. Saves a bunch of steps when adjusting our config.
+   #+begin_src emacs-lisp
+     (defun config-reload ()
+       (interactive)
+       (org-babel-load-file (expand-file-name "~/.emacs.d/config.org")))
+     (global-set-key (kbd "C-c r") 'config-reload)
+   #+end_src
+
+
+
