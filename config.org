@@ -5,7 +5,7 @@
    #+begin_src emacs-lisp
      (setq org-src-window-setup 'current-window)
    #+end_src
-** Enable <s snippet
+** Enable snippets
    See this [[https://emacs.stackexchange.com/questions/46988/why-do-easy-templates-e-g-s-tab-in-org-9-2-not-work][stack exchange]] for details and the [[https://github.com/dangom/org-mode/blob/master/lisp/org-tempo.el][org-tempo source]] for info on the full ability and on the implementation,  but we need to require this package in order to restore the snippet behavior of =<s= and other expansions.
    #+begin_src emacs-lisp
      (require 'org-tempo)

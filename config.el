@@ -38,7 +38,10 @@
 
 (global-set-key (kbd "<s-return>") 'ansi-term)
 
-(exec-path-from-shell-initialize)
+(use-package exec-path-from-shell
+  :ensure t
+  :init
+  (exec-path-from-shell-initialize))
 
 (use-package which-key
     :ensure t
@@ -69,7 +72,7 @@
 
 (setq ring-bell-function 'ignore)
 
-(setq make-backup-filese nil)
+(setq make-backup-files nil)
 (setq auto-save-default nil)
 
 (tool-bar-mode -1)
@@ -78,10 +81,6 @@
 (setq inhibit-splash-screen t)
 
 (global-subword-mode 1)
-
-(use-package 'sudo-edit
-  :ensure t
-  :bind ("s-e") . sudo-edit)
 
 (defun config-visit ()
   (interactive)
