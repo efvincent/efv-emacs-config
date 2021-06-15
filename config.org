@@ -345,12 +345,13 @@
     ("M-m" . 'dmenu))
 
 ** system monitor
-   #+begin_src emacs-lisp
-     (use-package symon
-       :ensure t
-       :bind
-       ("s-h" . symon-mode))
-   #+end_src
+#+begin_src emacs-lisp
+  (use-package symon
+    :ensure t
+    :bind
+    ("s-h" . symon-mode))
+#+end_src
+
 * Config edit/reload
 ** edit
    Find and open the =config.org= file where we'll modify our emacs configuation.
@@ -369,5 +370,11 @@
      (global-set-key (kbd "C-c r") 'config-reload)
    #+end_src
 
-
-
+* Evil
+  The much heralded evil mode. Time to give it a twirl
+  #+begin_src emacs-lisp
+    (use-package evil
+      :ensure t
+      :config
+      (evil-mode 1))
+  #+end_src
