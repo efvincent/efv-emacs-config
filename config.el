@@ -1,3 +1,24 @@
+(use-package beacon
+    :ensure t
+    :init (beacon-mode 1))
+
+(global-hl-line-mode t)
+
+(global-set-key (kbd "C-x b") 'ibuffer)
+
+(setq ibuffer-expert t)
+
+(use-package company
+  :ensure t
+  :init
+  (add-hook 'after-init-hook 'global-company-mode))
+
+(use-package which-key
+    :ensure t
+    :init (which-key-mode))
+
+(defalias 'yes-or-no-p 'y-or-n-p)
+
 (setq org-src-window-setup 'current-window)
 
 (require 'org-tempo)
@@ -27,10 +48,6 @@
 
 (global-set-key (kbd "C-x C-b") 'ido-switch-buffer)
 
-(global-set-key (kbd "C-x b") 'ibuffer)
-
-(setq ibuffer-expert t)
-
 (defvar my-term-shell "/bin/zsh")
 (defadvice ansi-term (before force-bash)
   (interactive (list my-term-shell)))
@@ -43,19 +60,25 @@
   :init
   (exec-path-from-shell-initialize))
 
-(use-package which-key
-    :ensure t
-    :init (which-key-mode))
-
-(defalias 'yes-or-no-p 'y-or-n-p)
-
-(use-package beacon
-    :ensure t
-    :init (beacon-mode 1))
-
-(global-hl-line-mode t)
-
 (setq scroll-conservatively 100)
+
+(use-package spaceline
+  :ensure t
+  :config
+  (require 'spaceline-config)
+  (setq powerline-default-separator (quote arrow))
+  (spaceline-spacemacs-theme))
+
+(use-package diminish
+  :ensure t
+  :init
+  (diminish 'hungry-delete-mode)
+  (diminish 'beacon-mode)
+  (diminish 'which-key-mode)
+  (diminish 'company-mode)
+  (diminish 'rainbow-mode)
+  (diminish 'visual-line-mode)
+  (diminish 'subword-mode))
 
 (cua-mode 1)
 
@@ -70,6 +93,11 @@
   :bind
   ("M-s" . avy-goto-char))
 
+(use-package rainbow-delimiters
+  :ensure t
+  :init
+  (add-hook 'prog-mode-hook #'rainbow-delimiters-mode 1))
+
 (setq ring-bell-function 'ignore)
 
 (setq make-backup-files nil)
@@ -81,6 +109,43 @@
 (setq inhibit-splash-screen t)
 
 (global-subword-mode 1)
+
+(setq electric-pair-pairs '(
+			    (?\( . ?\))
+			    (?\[ . ?\])
+			    (?\{ . ?\})
+			    )
+      )
+(electric-pair-mode t)
+
+(defun kill-whole-word ()
+  (interactive)
+  (backward-word)
+  (kill-word 1))
+(global-set-key (kbd "C-c w w") 'kill-whole-word)
+
+(defun copy-whole-line ()
+  (interactive)
+  (save-excursion        ;; store cursor location, return at end of scope
+    (kill-new            ;; copy from begging of line (bol) to eol
+     (buffer-substring
+      (point-at-bol)
+      (point-at-eol)))))
+(global-set-key (kbd "C-c w l") 'copy-whole-line)
+
+(use-package dashboard
+  :ensure t
+  :config
+  (dashboard-setup-startup-hook)
+  (setq dashboard-items '((recents . 10)))
+  (setq dashboard-banner-logo-title "Emacs EFV"))
+
+(display-time-mode 1)
+
+(use-package symon
+  :ensure t
+  :bind
+  ("s-h" . symon-mode))
 
 (defun config-visit ()
   (interactive)
@@ -122,16 +187,15 @@
   :bind
   ([remap other-window] . switch-window))
 
-(setq electric-pair-pairs '(
-			    (?\( . ?\))
-			    (?\[ . ?\])
-			    (?\{ . ?\])
-			    )
-      )
-(electric-pair-mode t)
-
-(defun kill-whole-word ()
+(defun kill-current-buffer ()
   (interactive)
-  (backward-word)
-  (kill-word 1))
-(global-set-key (kbd "C-c w w") 'kill-whole-word)
+  (kill-buffer (current-buffer)))
+(global-set-key (kbd "C-x k") 'kill-current-buffer)
+
+(defun kill-all-buffers ()
+  (interactive)
+  (mapc 'kill-buffer (buffer-list)))
+(global-set-key (kbd "C-M-s-k") 'kill-all-buffers)
+
+(line-number-mode 1)
+(column-number-mode 1)

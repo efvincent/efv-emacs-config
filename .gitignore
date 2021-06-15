@@ -3,3 +3,7 @@ elpa
 ido.last
 smex-items
 config.el
+config.pdf
+config.tex
+dmenu-items
+recentf
