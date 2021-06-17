@@ -126,15 +126,6 @@
      (setq scroll-conservatively 100)
    #+end_src
 
-** spaceline
-   #+begin_src emacs-lisp
-     (use-package spaceline
-       :ensure t
-       :config
-       (require 'spaceline-config)
-       (setq powerline-default-separator (quote arrow))
-       (spaceline-spacemacs-theme))
-   #+end_src
 ** diminish
    Hide minor modes from the mode line
    #+begin_src emacs-lisp
@@ -144,7 +135,6 @@
        (diminish 'hungry-delete-mode)
        (diminish 'beacon-mode)
        (diminish 'which-key-mode)
-       (diminish 'company-mode)
        (diminish 'rainbow-mode)
        (diminish 'visual-line-mode)
        (diminish 'subword-mode))
@@ -171,14 +161,6 @@
       :ensure t
       :init (rainbow-mode 1))
   #+end_src  
-** Jump to a letter with Avy
-   Select =M-s= and choose a letter to either jump to that letter (across lines) or if there's more than one (like there's likely to be) create key chords you can use to jump to different occurences of that letter.
-  # #+begin_src emacs-lisp
-  #   (use-package avy
-  #     :ensure t
-  #     :bind
-  #     ("M-s" . avy-goto-char))
-  # #+end_src
 ** Rainbow Delimiters
    #+begin_src emacs-lisp
      (use-package rainbow-delimiters
@@ -323,3 +305,9 @@
    #+end_src
    
    
+
+* Theme
+  #+begin_src emacs-lisp
+    (use-package nimbus-theme
+      :ensure t)
+  #+end_src
