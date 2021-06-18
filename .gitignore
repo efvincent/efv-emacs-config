@@ -8,3 +8,6 @@ config.pdf
 config.tex
 dmenu-items
 recentf
+.cache
+.lsp-session-*
+projectile-bookmarks*

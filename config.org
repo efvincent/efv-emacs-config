@@ -1,6 +1,12 @@
 * Evil
   The much heralded evil mode. 
   #+begin_src emacs-lisp
+    ;;; package -- evil editing mode
+
+    ;;; Commentary:
+    ;;; This makes Emacs implement VIM for all intents and purposes
+
+    ;;; Code:
     (use-package evil
       :ensure t
       :config
@@ -58,7 +64,12 @@
      (global-set-key (kbd "C-x 3") 'split-and-follow-v)
   #+end_src
 
-** Quick Switcher
+** Window Management
+   My own alternate bindings to change how we switch between windows
+   #+begin_src emacs-lisp
+     (global-set-key (kbd "s-`") 'other-window)
+     (global-set-key (kbd "s-w") 'delete-window)
+   #+end_src
 * Buffers
 ** always kill current buffer
    By default =C-x k= pulls up a menu asking what buffer to kill. I want to kill the current buffer always no prompt.
@@ -230,11 +241,14 @@
    #+begin_src emacs-lisp
      (menu-bar--display-line-numbers-mode-relative)
      (global-display-line-numbers-mode t)
-
    #+end_src
 ** Maximize the Window
    #+begin_src emacs-lisp
      (add-to-list 'default-frame-alist '(fullscreen . maximized))
+   #+end_src
+** Open a file with command O
+   #+begin_src emacs-lisp
+     (global-set-key (kbd "s-o") 'helm-find-files)
    #+end_src
 * Config edit/reload
 ** edit
@@ -308,9 +322,177 @@
        (exec-path-from-shell-initialize))
    #+end_src
    
-   
 * Theme
   #+begin_src emacs-lisp
     (use-package nimbus-theme
       :ensure t)
+  #+end_src
+* Projecs and Languages
+** Language Server
+
+   Installs language server, universally used by most languages.
+     #+begin_src emacs-lisp
+       (use-package lsp-mode
+	 :init
+	 ;; set prefix for lsp-command-keymap (few alternatives - "C-l", "C-c l")
+	 (setq lsp-keymap-prefix "C-c l")
+	 :hook (
+	   (haskell-mode . lsp)
+	   (lsp-mode . lsp-enable-which-key-integration))
+	       :commands lsp)
+
+	      ;; optionally
+	      (use-package lsp-ui
+		:ensure t
+		:commands lsp-ui-mode)
+
+	      ;; if you are helm user
+	      (use-package helm-lsp
+		:ensure t
+		:commands helm-lsp-workspace-symbol)
+
+	      (use-package lsp-treemacs
+		:ensure t
+	:commands lsp-treemacs-errors-list)
+
+       (setq lsp-ui-doc-max-height 50)
+       (setq lsp-ui-doc-show-with-mouse t)
+
+  #+end_src
+
+** FlyCheck
+   On the fly syntax checking used by lsp for haskell
+   #+begin_src emacs-lisp
+     (use-package flycheck
+       :ensure t
+       :init (global-flycheck-mode))
+   #+end_src
+** Projectile
+
+   For managing projects
+
+   #+begin_src emacs-lisp
+     (use-package projectile
+       :ensure t
+       :init
+       (projectile-mode +1)
+       :bind (:map projectile-mode-map
+		   ;; replaces ns-print-buffer binding
+		   ("s-p" . projectile-command-map)
+		   ("C-c p" . projectile-command-map)))
+   #+end_src
+   
+** Haskell Language Server
+
+   Provides the glue between emacs language server mode and Haskell's language server which runs as a separate process outside of emacs.
+
+   #+begin_src emacs-lisp
+     (use-package lsp-haskell
+       :ensure t)
+
+     (add-hook 'haskell-mode-hook #'lsp)
+     (add-hook 'haskell-literate-mode-hook #'lsp)
+   #+end_src
+
+   
+* Treemacs
+  #+begin_src emacs-lisp
+    ;;; Package --- Treemacs for hierarchical file organization
+    ;;; Commentary: Creates a more IDE like coding experience
+    ;;; Code:
+    (use-package treemacs
+      :ensure t
+      :defer t
+      :init
+      (with-eval-after-load 'winum
+	(define-key winum-keymap (kbd "M-0") #'treemacs-select-window))
+      :config
+      (progn
+	(setq treemacs-collapse-dirs                 (if treemacs-python-executable 3 0)
+	      treemacs-deferred-git-apply-delay      0.5
+	      treemacs-directory-name-transformer    #'identity
+	      treemacs-display-in-side-window        t
+	      treemacs-eldoc-display                 t
+	      treemacs-file-event-delay              5000
+	      treemacs-file-extension-regex          treemacs-last-period-regex-value
+	      treemacs-file-follow-delay             0.2
+	      treemacs-file-name-transformer         #'identity
+	      treemacs-follow-after-init             t
+	      treemacs-expand-after-init             t
+	      treemacs-git-command-pipe              ""
+	      treemacs-goto-tag-strategy             'refetch-index
+	      treemacs-indentation                   2
+	      treemacs-indentation-string            " "
+	      treemacs-is-never-other-window         nil
+	      treemacs-max-git-entries               5000
+	      treemacs-missing-project-action        'ask
+	      treemacs-move-forward-on-expand        nil
+	      treemacs-no-png-images                 nil
+	      treemacs-no-delete-other-windows       t
+	      treemacs-project-follow-cleanup        nil
+	      treemacs-persist-file                  (expand-file-name ".cache/treemacs-persist" user-emacs-directory)
+	      treemacs-position                      'left
+	      treemacs-read-string-input             'from-child-frame
+	      treemacs-recenter-distance             0.1
+	      treemacs-recenter-after-file-follow    nil
+	      treemacs-recenter-after-tag-follow     nil
+	      treemacs-recenter-after-project-jump   'always
+	      treemacs-recenter-after-project-expand 'on-distance
+	      treemacs-litter-directories            '("/node_modules" "/.venv" "/.cask")
+	      treemacs-show-cursor                   nil
+	      treemacs-show-hidden-files             t
+	      treemacs-silent-filewatch              nil
+	      treemacs-silent-refresh                nil
+	      treemacs-sorting                       'alphabetic-asc
+	      treemacs-space-between-root-nodes      t
+	      treemacs-tag-follow-cleanup            t
+	      treemacs-tag-follow-delay              1.5
+	      treemacs-user-mode-line-format         nil
+	      treemacs-user-header-line-format       nil
+	      treemacs-width                         35
+	      treemacs-workspace-switch-cleanup      nil)
+
+	;; The default width and height of the icons is 22 pixels. If you are
+	;; using a Hi-DPI display, uncomment this to double the icon size.
+	;;(treemacs-resize-icons 44)
+
+	(treemacs-follow-mode t)
+	(treemacs-filewatch-mode t)
+	(treemacs-fringe-indicator-mode 'always)
+	(pcase (cons (not (null (executable-find "git")))
+		     (not (null treemacs-python-executable)))
+	  (`(t . t)
+	   (treemacs-git-mode 'deferred))
+	  (`(t . _)
+	   (treemacs-git-mode 'simple))))
+      :bind
+      (:map global-map
+	    ("M-0"       . treemacs-select-window)
+	    ("C-x t 1"   . treemacs-delete-other-windows)
+	    ("C-x t t"   . treemacs)
+	    ("C-x t B"   . treemacs-bookmark)
+	    ("C-x t C-t" . treemacs-find-file)
+	    ("C-x t M-t" . treemacs-find-tag)))
+
+    (use-package treemacs-evil
+      :after (treemacs evil)
+      :ensure t)
+
+    (use-package treemacs-projectile
+      :after (treemacs projectile)
+      :ensure t)
+
+    (use-package treemacs-icons-dired
+      :after (treemacs dired)
+      :ensure t
+      :config (treemacs-icons-dired-mode))
+
+    (use-package treemacs-magit
+      :after (treemacs magit)
+      :ensure t)
+
+    ;; (use-package treemacs-persp ;;treemacs-perspective if you use perspective.el vs. persp-mode
+    ;;   :after (treemacs persp-mode) ;;or perspective vs. persp-mode
+    ;;   :ensure t
+    ;;   :config (treemacs-set-scope-type 'Perspectives))
   #+end_src
