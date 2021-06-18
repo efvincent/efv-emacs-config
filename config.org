@@ -232,6 +232,10 @@
      (global-display-line-numbers-mode t)
 
    #+end_src
+** Maximize the Window
+   #+begin_src emacs-lisp
+     (add-to-list 'default-frame-alist '(fullscreen . maximized))
+   #+end_src
 * Config edit/reload
 ** edit
    Find and open the =config.org= file where we'll modify our emacs configuation.
@@ -305,7 +309,6 @@
    #+end_src
    
    
-
 * Theme
   #+begin_src emacs-lisp
     (use-package nimbus-theme
