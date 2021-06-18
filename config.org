@@ -205,11 +205,6 @@
      (setq inhibit-splash-screen t)
    #+end_src
 
-** Subword
-   When moving through words with =Alt-f= and =Alt-b= this setting causes the jumps happen into sub words in a camel or snake case variable.
-   #+begin_src emacs-lisp
-     (global-subword-mode 1)
-   #+end_src
 ** Electric Parens
    #+begin_src emacs-lisp
      (setq electric-pair-pairs '(
@@ -394,7 +389,6 @@
      (add-hook 'haskell-literate-mode-hook #'lsp)
    #+end_src
 
-   
 * Treemacs
   #+begin_src emacs-lisp
     ;;; Package --- Treemacs for hierarchical file organization
