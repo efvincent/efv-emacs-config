@@ -572,3 +572,9 @@
     ;;   :ensure t
     ;;   :config (treemacs-set-scope-type 'Perspectives))
   #+end_src
+
+* NOTES FROM INSTALLATION
+To make a background appear, use =$ feh --bg-fit <imagefilename>=
+To map caps lock into esc, use =$ localctl set-x11-keymap us "" "" caps:escape
+Use =.xsession= instead of =.xinitrc=, and make sure it's executable
+set the key repeat rate with =xset r rate 285 50=
