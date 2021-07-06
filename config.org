@@ -460,17 +460,6 @@
      (add-hook 'haskell-literate-mode-hook #'lsp)
    #+end_src
 
-** YAML
-   #+begin_src emacs-lisp
-     (use-package yaml-mode
-       :ensure t
-       :config
-       (add-to-list 'auto-mode-alist '("\\.yml\\'" . yaml-mode))
-       (add-hook 'yaml-mode-hook
-	 '(lambda ()
-	    (define-key yaml-mode-map "\C-m" 'newline-and-indent)))
-       )
-   #+end_src
 * Treemacs
   #+begin_src emacs-lisp
     ;;; Package --- Treemacs for hierarchical file organization
@@ -572,3 +561,14 @@
     ;;   :ensure t
     ;;   :config (treemacs-set-scope-type 'Perspectives))
   #+end_src
+
+* One on ones
+** Amir
+*** Tomer
+    How's he doing?
+    Amir - he's a bit nervous, he's trying hard. Wants to make sure he's doing a good job. Getting good feedback about Rod.
+    We should make sure we focus on what we need to focus on, and then let him get to work on his 
+*** Glenn's file import process
+    Explained it to Amir - he's cool with it
+*** What Can Amir focus on?
+    He knows a lot about unsubs. Will involve him in Web Hook BCI initiatives
