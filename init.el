@@ -37,12 +37,15 @@
  ;; If there is more than one, they won't work right.
  '(ansi-color-faces-vector
    [default default default italic underline success warning error])
- '(custom-enabled-themes '(nimbus))
+ '(ansi-color-names-vector
+   ["#454545" "#d65946" "#6aaf50" "#baba36" "#598bc1" "#ab75c3" "#68a5e9" "#AAB0AB"])
+ '(custom-enabled-themes '(gruber-darker))
  '(custom-safe-themes
-   '("48c02faac1209d3e960e15fa252cc0869aab5f96e6533bcf4619d2e88b74d7ac" "" default))
+   '("bffa9739ce0752a37d9b1eee78fc00ba159748f50dc328af4be661484848e476" "84d2f9eeb3f82d619ca4bfffe5f157282f4779732f48a5ac1484d94d5ff5b279" "3c83b3676d796422704082049fc38b6966bcad960f896669dfc21a7a37a748fa" "5f824cddac6d892099a91c3f612fcf1b09bb6c322923d779216ab2094375c5ee" "48c02faac1209d3e960e15fa252cc0869aab5f96e6533bcf4619d2e88b74d7ac" "" default))
+ '(frame-brackground-mode 'dark)
  '(org-src-window-setup 'current-window)
  '(package-selected-packages
-   '(lsp-treemacs helm-lsp lsp-ui treemacs-magit treemacs-icons-dired treemacs-projectile treemacs-evil treemacs lsp-ui-menu lsp-ui-doc lsp-ui-peek lsp-ui-sideline flycheck nimbus-theme helm evil diminish rainbow-delimiters zenburn-theme hungry-delete switch-window rainbow-mode avy smex ido-vertical-mode exec-path-from-shell org-bullets beacon which-key use-package)))
+   '(yaml-mode spacemacs-config powerline-evil smart-mode-line-powerline-theme smart-mode-line gruber-darker-theme lsp-treemacs helm-lsp lsp-ui treemacs-magit treemacs-icons-dired treemacs-projectile treemacs-evil treemacs lsp-ui-menu lsp-ui-doc lsp-ui-peek lsp-ui-sideline flycheck nimbus-theme helm evil diminish rainbow-delimiters zenburn-theme hungry-delete switch-window rainbow-mode avy smex ido-vertical-mode exec-path-from-shell org-bullets beacon which-key use-package)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
