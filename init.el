@@ -45,7 +45,7 @@
  '(frame-brackground-mode 'dark)
  '(org-src-window-setup 'current-window)
  '(package-selected-packages
-   '(spacemacs-theme yaml-mode spacemacs-config powerline-evil smart-mode-line-powerline-theme smart-mode-line gruber-darker-theme lsp-treemacs helm-lsp lsp-ui treemacs-magit treemacs-icons-dired treemacs-projectile treemacs-evil treemacs lsp-ui-menu lsp-ui-doc lsp-ui-peek lsp-ui-sideline flycheck nimbus-theme helm evil diminish rainbow-delimiters zenburn-theme hungry-delete switch-window rainbow-mode avy smex ido-vertical-mode exec-path-from-shell org-bullets beacon which-key use-package)))
+   '(undo-fu spacemacs-theme yaml-mode spacemacs-config powerline-evil smart-mode-line-powerline-theme smart-mode-line gruber-darker-theme lsp-treemacs helm-lsp lsp-ui treemacs-magit treemacs-icons-dired treemacs-projectile treemacs-evil treemacs lsp-ui-menu lsp-ui-doc lsp-ui-peek lsp-ui-sideline flycheck nimbus-theme helm evil diminish rainbow-delimiters zenburn-theme hungry-delete switch-window rainbow-mode avy smex ido-vertical-mode exec-path-from-shell org-bullets beacon which-key use-package)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

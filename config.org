@@ -22,14 +22,6 @@
      (setq evil-split-window-below t)
      (setq evil-split-window-right t)
    #+end_src
-* Consider these
-  Some packages to consider for the future
-
-  | package | Notes                                |
-  |---------+--------------------------------------|
-  | [[https://gitlab.com/ideasman42/emacs-undo-fu][undo-fu]] | Simple, stable linear undo for emacs |
-  |         |                                      |
-
 * Windows
 ** Highlight Cursor on switch
    This package does a quick animation around the cursor when you switch to a window that helps you zero in on where it is. Handy, but not obtrusive.
@@ -227,7 +219,12 @@
    #+begin_src emacs-lisp
      (cua-mode 1)
    #+end_src
-   
+** Undo-fu
+   Use more sophisticated undo with [[][undo-fu]]
+   #+begin_src emacs-lisp
+     (use-package undo-fu
+       :init (setq evil-undo-system 'undo-fu))
+   #+end_src
 ** Fancy Substition, for example Lambda
    This is a cool one - replaces the word =lambda= with the actual lambda characer /visually/, meaning the word =lambda= is still in the file, it just looks super cool.
 
