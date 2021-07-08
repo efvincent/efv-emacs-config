@@ -107,7 +107,7 @@
 ;; turn off org's indent mode
 (add-hook 'org-mode-hook (lambda ()
 			   (visual-line-mode t)
-			   (org-indent-mode f)
+			   (org-indent-mode 0)
 			   (electic-local-indent-mode 0)))
 
 ;; Allow leading starts to remain (when not using bullets)
