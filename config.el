@@ -103,11 +103,12 @@
   :config
   (add-hook 'org-mode-hook (lambda () (org-bullets-mode))))
 
-;; Use text wrapping in org mode &
-;; turn off org's indent mode
+;; Use text wrapping in org mode
+;; turn off electric (automatic) indenting which is super annoying
 (add-hook 'org-mode-hook (lambda ()
 			   (visual-line-mode t)
-			   (org-indent-mode 0)
+			   (org-indent-mode t)
+			   (org-bullets-mode)
 			   (electic-local-indent-mode 0)))
 
 ;; Allow leading starts to remain (when not using bullets)
