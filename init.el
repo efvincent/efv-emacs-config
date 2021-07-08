@@ -35,17 +35,10 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(ansi-color-faces-vector
-   [default default default italic underline success warning error])
- '(ansi-color-names-vector
-   ["#454545" "#d65946" "#6aaf50" "#baba36" "#598bc1" "#ab75c3" "#68a5e9" "#AAB0AB"])
- '(custom-enabled-themes '(spacemacs-dark))
  '(custom-safe-themes
-   '("9685cefcb4efd32520b899a34925c476e7920725c8d1f660e7336f37d6d95764" "fa2b58bb98b62c3b8cf3b6f02f058ef7827a8e497125de0254f56e373abee088" "bffa9739ce0752a37d9b1eee78fc00ba159748f50dc328af4be661484848e476" "84d2f9eeb3f82d619ca4bfffe5f157282f4779732f48a5ac1484d94d5ff5b279" "3c83b3676d796422704082049fc38b6966bcad960f896669dfc21a7a37a748fa" "5f824cddac6d892099a91c3f612fcf1b09bb6c322923d779216ab2094375c5ee" "48c02faac1209d3e960e15fa252cc0869aab5f96e6533bcf4619d2e88b74d7ac" "" default))
- '(frame-brackground-mode 'dark)
- '(org-src-window-setup 'current-window)
+   '("af61897863697976008645e485ac1a0b5ec0fdef264a1dbe39b335485a62b77e" default))
  '(package-selected-packages
-   '(org-beautify-theme undo-fu spacemacs-theme yaml-mode spacemacs-config powerline-evil smart-mode-line-powerline-theme smart-mode-line gruber-darker-theme lsp-treemacs helm-lsp lsp-ui treemacs-magit treemacs-icons-dired treemacs-projectile treemacs-evil treemacs lsp-ui-menu lsp-ui-doc lsp-ui-peek lsp-ui-sideline flycheck nimbus-theme helm evil diminish rainbow-delimiters zenburn-theme hungry-delete switch-window rainbow-mode avy smex ido-vertical-mode exec-path-from-shell org-bullets beacon which-key use-package)))
+   '(undo-fu yaml-mode powerline-evil smart-mode-line-powerline-theme smart-mode-line lsp-treemacs helm-lsp lsp-ui lsp-ui-menu lsp-ui-doc lsp-ui-peek lsp-ui-sideline flycheck helm evil diminish rainbow-delimiters hungry-delete switch-window rainbow-mode avy smex ido-vertical-mode exec-path-from-shell org-bullets beacon which-key use-package)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
