@@ -1,5 +1,5 @@
 ;; package management
-;; ---------------------------------- 
+;; --------------------------
 (require 'package)
 (setq package-enable-at-startup nil)
 (add-to-list 'package-archives
@@ -7,29 +7,17 @@
 
 (package-initialize)
 
-;; simplify package management with the use-package package
+;; simplify package management with use-package package
 (unless (package-installed-p 'use-package)
   (package-refresh-contents)
   (package-install 'use-package))
 
-;; give doom themes a try
-(unless (package-installed-p 'doom-themes)
-  (package-refresh-contents)
-  (package-install 'doom-themes))
+;; load main config from config.el
+;; in this build, I'm not using an org mode based init
+(load "~/.emacs.d/config.el")
 
-;; Exract elisp from config.org and source from here
-(org-babel-load-file (expand-file-name "~/.emacs.d/config.org"))
+;; below this point, emacs will control customized parameters
 
-;;;;;; above here doesn't move to config.org
-
-
-;; all the stuff that was here is in the config.org file and is extracted above ^
-
-
-;;;;;;;;; Below here doesn't go to config.org
-
-;; Controlled by configuration - generated code
-;;----------------------------------------------
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -44,6 +32,4 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(default ((t (:inherit nil :extend nil :stipple nil :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 100 :width normal :family "FuraCode Nerd Font"))))
- '(org-block-begin-line ((t (:inherit org-meta-line :extend t))))
- '(org-block-end-line ((t (:inherit org-meta-line :extend t)))))
+ )
