@@ -1,6 +1,14 @@
+;;; package --- summary
+;;
 ;; primary configuration file
 ;; Eric Vincent
 ;; July 7, 2021
+;;
+;;; Commentary:
+;;
+;; This is a from scratch custom configuration file I've written after
+;; having lived for a while with one cobbled together from googling
+;; around and watching yt vids.
 ;;
 ;;; Code:
 
@@ -36,30 +44,30 @@
 ;; to the new window. Otherwise, you have to explicitly change focus over.
 
 (defun split-and-follow-h ()
-  ;; perform split horizontally and put the cursor in the new window
+  "Perform split horizontally and put the cursor in the new window."
   (interactive)
-  (split-window-below)
+  (spit-window-below)
   (balance-windows)
   (other-window 1))
 
 (defun split-and-follow-v ()
-  ;; perform vertical split and have the focus follow
+  "Perform vertical split and have the focus follow."
   (interactive)
   (split-window-right)
   (balance-windows)
   (other-window 1))
 
 ;;-------------------------
-;; Buffers 
+;; Buffers
 ;;-------------------------
 
-;; Always kill the current buffer
 (defun kill-current-buffer ()
+  "Always kill the current buffer."
   (interactive)
   (kill-buffer (current-buffer)))
   
 ;;-------------------------
-;; Commands 
+;; Commands
 ;;-------------------------
 
 ;; Auto completion - we're using company (as opposed to autocomplete)
@@ -81,7 +89,7 @@
 
 
 ;;-------------------------
-;; Org Mode! 
+;; Org Mode!
 ;;-------------------------
 
 ;; When editing a source section, zoom it into current window
@@ -197,8 +205,6 @@
 (use-package helm
   :init
     (require 'helm-config)
-    (setq helm-split-window-in-side-p t
-          helm-move-to-line-cycle-in-source t)
   :config
     (helm-mode 1)                                                   ;; Most of Emacs prompts become helm-enabled
     (helm-autoresize-mode 1)                                        ;; Helm resizes according to the number of candidates
@@ -217,7 +223,7 @@
 (setq helm-move-to-line-cycle-in-source t)
 
 ;; helm use minibuffer; less disruptive
-(setq helm-split-window-in-side-p t)
+(setq helm-split-window-inside-p t)
 
 ;;-------------------------
 ;; FlyCheck
@@ -338,10 +344,12 @@
 
 ;; config file edit / reload
 (defun edit-config-file ()
+  "Load the configuration file."
   (interactive)
   (find-file "~/.emacs.d/config.el"))
 
 (defun reload-config-file ()
+  "Reload (execute) the configuration file."
   (interactive)
   (load "~/.emacs.d/config.el"))
 
@@ -354,7 +362,7 @@
 (global-set-key (kbd "C-c r") 'reload-config-file)
 
 ;; kill the current buffer
-(global-set-key (kbd "C-x k") 'kill-current-buffer)  
+(global-set-key (kbd "C-x k") 'kill-current-buffer)
   
 ;; window splits - bind to my own functions (see above)
 (global-set-key (kbd "C-x 2") 'split-and-follow-h)
@@ -363,3 +371,7 @@
 ;; switch windows
 (global-set-key (kbd "C-`") 'other-window)
 
+
+(provide 'config)
+
+;;; config.el ends here
