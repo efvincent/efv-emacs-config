@@ -46,7 +46,7 @@
 (defun split-and-follow-h ()
   "Perform split horizontally and put the cursor in the new window."
   (interactive)
-  (spit-window-below)
+  (split-window-below)
   (balance-windows)
   (other-window 1))
 
@@ -301,6 +301,13 @@
 
 (setq lsp-ui-doc-max-height 50)
 (setq lsp-ui-doc-show-with-mouse t)
+
+;;-------------------------
+;; Magit
+;;-------------------------
+
+(use-package magit
+  :ensure t)
 
 ;;-------------------------
 ;; Misc
