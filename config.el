@@ -272,10 +272,15 @@
 ;; Language Server
 ;;-------------------------
 
+;; Base LSP for emacs
+(require 'lsp)
+
 ;; dependency lsp-ui was giving me trouble... pre-load it to be sure
 (use-package lsp-ui
   :ensure t
   :commands lsp-ui-mode)
+
+;; See haskell specifics here: https://emacs-lsp.github.io/lsp-haskell
 
 (use-package lsp-mode
   :init
@@ -299,6 +304,10 @@
        (use-package lsp-treemacs
          :ensure t
  :commands lsp-treemacs-errors-list)
+
+;; Hooks so haskell and literate haskell major modes trigger LSP setup
+(add-hook 'haskell-mode-hook #'lsp)
+(add-hook 'haskell-literate-mode-hook #'lsp)
 
 (setq lsp-ui-doc-max-height 50)
 (setq lsp-ui-doc-show-with-mouse t)
