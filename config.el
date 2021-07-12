@@ -246,16 +246,6 @@
 	      ("C-c p" . projectile-command-map)))
 
 ;;-------------------------
-;; Haskell
-;;-------------------------
-
-(use-package lsp-haskell
-  :ensure t)
-
-(add-hook 'haskell-mode-hook #'lsp)
-(add-hook 'haskell-literal-mode-hook #'lsp)
-
-;;-------------------------
 ;; Yaml
 ;;-------------------------
 
@@ -275,12 +265,16 @@
 ;; Base LSP for emacs
 (require 'lsp)
 
+(use-package yasnippet
+  :ensure t)
+
 ;; dependency lsp-ui was giving me trouble... pre-load it to be sure
 (use-package lsp-ui
   :ensure t
   :commands lsp-ui-mode)
 
 ;; See haskell specifics here: https://emacs-lsp.github.io/lsp-haskell
+;; also useful: http://abailly.github.io/posts/a-modern-haskell-env.html
 
 (use-package lsp-mode
   :init
@@ -289,21 +283,36 @@
   :hook (
     (haskell-mode . lsp)
     (lsp-mode . lsp-enable-which-key-integration))
-        :commands lsp)
+  :commands lsp)
 
-       ;; optionally
-       (use-package lsp-ui
-         :ensure t
-         :commands lsp-ui-mode)
+;; optionally
+(use-package lsp-ui
+  :ensure t
+  :commands lsp-ui-mode)
 
-       ;; if you are helm user
-       (use-package helm-lsp
-         :ensure t
-         :commands helm-lsp-workspace-symbol)
+;; if you are helm user
+(use-package helm-lsp
+  :ensure t
+  :commands helm-lsp-workspace-symbol)
 
-       (use-package lsp-treemacs
-         :ensure t
- :commands lsp-treemacs-errors-list)
+;;-------------------------
+;; Haskell
+;;-------------------------
+
+;; Assure that haskell tools are on the path
+(setq exec-path
+      (reverse
+       (append
+        (reverse exec-path)
+        (list (concat (getenv "HOME") "/.ghcup/bin")  "/usr/local/bin" ))))
+
+(use-package lsp-haskell
+  :ensure t
+  :config
+  (setq lsp-haskell-server-path "haskell-language-server-8.10.4")
+  (setq lsp-haskell-server-args ())
+  ;; comment/uncomment this line to see interactions between lsp client/server
+  (setq lsp-log-io t))
 
 ;; Hooks so haskell and literate haskell major modes trigger LSP setup
 (add-hook 'haskell-mode-hook #'lsp)
