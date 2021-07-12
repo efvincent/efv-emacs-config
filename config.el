@@ -114,6 +114,9 @@
 ;; Allow leading starts to remain (when not using bullets)
 (setq org-hide-leading-stars nil)
 
+;; Identify org files that may have agenda items within - for agenda mode
+(setq org-agenda-files (list "~/org-files/work.org"))
+
 ;;-------------------------
 ;; Mode line
 ;;-------------------------
