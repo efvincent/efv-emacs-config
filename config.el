@@ -265,9 +265,6 @@
 ;; Language Server
 ;;-------------------------
 
-;; Base LSP for emacs
-(require 'lsp)
-
 (use-package yasnippet
   :ensure t)
 
