@@ -109,7 +109,7 @@
 			   (visual-line-mode t)
 			   (org-indent-mode t)
 			   (org-bullets-mode)
-			   (electic-local-indent-mode 0)))
+			   (electic-indent-local-mode -1)))
 
 ;; Allow leading starts to remain (when not using bullets)
 (setq org-hide-leading-stars nil)
