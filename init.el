@@ -1,3 +1,8 @@
+;;; Package --- Summary
+;;; Commentary:
+;;; Code:
+
+;;
 ;; package management
 ;; --------------------------
 (require 'package)
@@ -27,7 +32,7 @@
    '("af61897863697976008645e485ac1a0b5ec0fdef264a1dbe39b335485a62b77e" default))
  '(evil-undo-system 'undo-fu)
  '(package-selected-packages
-   '(lsp magit undo-fu yaml-mode powerline-evil smart-mode-line-powerline-theme smart-mode-line lsp-treemacs helm-lsp lsp-ui lsp-ui-menu lsp-ui-doc lsp-ui-peek lsp-ui-sideline flycheck helm evil diminish rainbow-delimiters hungry-delete switch-window rainbow-mode avy smex ido-vertical-mode exec-path-from-shell org-bullets beacon which-key use-package)))
+   '(fsharp-mode lsp magit undo-fu yaml-mode powerline-evil smart-mode-line-powerline-theme smart-mode-line lsp-treemacs helm-lsp lsp-ui lsp-ui-menu lsp-ui-doc lsp-ui-peek lsp-ui-sideline flycheck helm evil diminish rainbow-delimiters hungry-delete switch-window rainbow-mode avy smex ido-vertical-mode exec-path-from-shell org-bullets beacon which-key use-package)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
